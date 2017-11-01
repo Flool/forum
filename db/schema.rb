@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171031224128) do
+ActiveRecord::Schema.define(version: 20171101215806) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "comments", force: :cascade do |t|
     t.string "content"
@@ -18,12 +21,32 @@ ActiveRecord::Schema.define(version: 20171031224128) do
     t.string "att_content_type"
     t.integer "att_file_size"
     t.datetime "att_updated_at"
-    t.integer "post_id"
-    t.integer "user_id"
+    t.bigint "post_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string "title"
+    t.string "description"
+    t.string "pic_file_name"
+    t.string "pic_content_type"
+    t.integer "pic_file_size"
+    t.datetime "pic_updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "joins", force: :cascade do |t|
+    t.bigint "group_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_joins_on_group_id"
+    t.index ["user_id"], name: "index_joins_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -32,10 +55,12 @@ ActiveRecord::Schema.define(version: 20171031224128) do
     t.string "att_content_type"
     t.integer "att_file_size"
     t.datetime "att_updated_at"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "title"
+    t.bigint "group_id"
+    t.index ["group_id"], name: "index_posts_on_group_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
@@ -51,4 +76,10 @@ ActiveRecord::Schema.define(version: 20171031224128) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "users"
+  add_foreign_key "joins", "groups"
+  add_foreign_key "joins", "users"
+  add_foreign_key "posts", "groups"
+  add_foreign_key "posts", "users"
 end

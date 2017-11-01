@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
-  root 'users#index'
+  root 'groups#index'
   resources :users, only: [:index, :new, :create, :show]
   resources :sessions, only: [:new, :create, :destroy]
-  resources :posts do
-    resources :comments, only: [:create, :destroy], shallow: true
+  resources :groups, shallow: true do 
+    resources :posts, except: [:index] do
+      resources :comments, only: [:create, :destroy]
+    end
   end
+  
   get '/login', to: 'sessions#new'
 end

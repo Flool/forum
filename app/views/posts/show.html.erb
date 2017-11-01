@@ -1,7 +1,7 @@
 <h1><%= @post.title %></h1>
   <p> <%= @post.content %></p>
 
-<%= link_to 'Back', user_path(@post.user.id) %>
+<%= link_to 'Back', group_path(@post.group.id) %>
 &nbsp;&nbsp;&nbsp;&nbsp;
 <%if @post.user == current_user%>
   <%= link_to 'Delete', @post, method: :delete, data: { confirm: 'Are you sure?' } %>
@@ -16,8 +16,8 @@
 <ul>
 <% @post.comments.each do |comment| %>
   <li>
-    <div>
-      <%=comment.user.username%>: <%= comment.content %><br>
+    <div class = "comment">
+      <strong><%=comment.user.username%></strong>: <br> &nbsp;&nbsp; <%= comment.content %><br>
       <%if comment.user == current_user%>
         <%= link_to "delete comment", comment_path(comment), method: :delete %>
       <%end%>
