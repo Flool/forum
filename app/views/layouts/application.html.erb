@@ -12,21 +12,32 @@
 
   <body>
     <p>
-      <% if current_user %>
-      Welcome, <%= link_to current_user.username, posts_path %>
-      <div class = "navright">
-        <%= link_to 'Log Out', session_path('dummy'), method: :delete %>
-        &nbsp;&nbsp;|&nbsp;&nbsp;
+    <div class="container">
+    <div class="row">
+      <div class="col-sm">
         <%= link_to 'Create Thread', new_post_path %>
-        &nbsp;&nbsp;|&nbsp;&nbsp;
       </div>
-
-    <% else %>
-      <%= link_to 'Log In', login_path %>
-      &nbsp;&nbsp;|&nbsp;&nbsp;
-      <%= link_to 'Sign Up', new_user_path %>
-    <% end %>
+      <div class="col-sm">
+        One of three columns
+      </div>
+      <div class="col-sm">
+        <% if current_user %>
+          Welcome, <%= link_to current_user.username, user_path(current_user) %>
+          &nbsp;&nbsp;|&nbsp;&nbsp;
+          <%= link_to 'Log Out', session_path('dummy'), method: :delete %>
+        <% else %>
+          // <%= link_to 'Log In', login_path %>
+          // &nbsp;&nbsp;|&nbsp;&nbsp;
+          // <%= link_to 'Sign Up', new_user_path %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+    
     </p>
+    
+  
+
     <%= yield %>
   </body>
 </html>

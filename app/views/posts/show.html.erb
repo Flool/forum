@@ -1,9 +1,11 @@
 <h1><%= @post.title %></h1>
   <p> <%= @post.content %></p>
 
-<%= link_to 'Back', posts_path %>
+<%= link_to 'Back', user_path(@post.user.id) %>
 &nbsp;&nbsp;&nbsp;&nbsp;
-<%= link_to 'Delete', @post, method: :delete, data: { confirm: 'Are you sure?' } %>
+<%if @post.user == current_user%>
+  <%= link_to 'Delete', @post, method: :delete, data: { confirm: 'Are you sure?' } %>
+<%end%>
 <br><br>
 <%= form_for [@post, @comment] do |f| %>
   <%= f.text_field :content %>
@@ -15,8 +17,10 @@
 <% @post.comments.each do |comment| %>
   <li>
     <div>
-      Comment: <%= comment.content %><br>
-      <%= link_to "delete comment", comment_path(comment), method: :delete if comment.user = current_user  %>
+      <%=comment.user.username%>: <%= comment.content %><br>
+      <%if comment.user == current_user%>
+        <%= link_to "delete comment", comment_path(comment), method: :delete %>
+      <%end%>
     </div>
   </li>
 <% end %>
