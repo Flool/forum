@@ -6,14 +6,21 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
   </head>
 
   <body>
     <p>
       <% if current_user %>
-      Welcome, <%= current_user.username %>
-      &nbsp;&nbsp;|&nbsp;&nbsp;
-      <%= link_to 'Log Out', session_path('dummy'), method: :delete %>
+      Welcome, <%= link_to current_user.username, posts_path %>
+      <div class = "navright">
+        <%= link_to 'Log Out', session_path('dummy'), method: :delete %>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+        <%= link_to 'Create Thread', new_post_path %>
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+      </div>
+
     <% else %>
       <%= link_to 'Log In', login_path %>
       &nbsp;&nbsp;|&nbsp;&nbsp;

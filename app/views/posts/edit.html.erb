@@ -1,0 +1,8 @@
+<h2>Edit User</h2>
+<%= form_for @user do |f| %>
+    <div>
+        <%= f.label :content, "Content: " %>
+        <%= f.text_field :content %><br>
+    </div>
+    <%= f.submit "Save Changes" %>
+<% end %>
